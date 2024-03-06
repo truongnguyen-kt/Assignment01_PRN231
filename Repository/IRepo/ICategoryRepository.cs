@@ -13,10 +13,10 @@ namespace Repository.IRepo
 {
     public interface ICategoryRepository
     {
-        public bool AddNewCategory(CategoryRequest categoryRequest);
-        public bool UpdateCategory(CategoryRequest categoryRequest);
-        public bool DeleteCategory(CategoryRequest categoryRequest);
-        public Category GetCategoryById(int id);
-        public CategoryResponse ConvertToResponse(Category account);
+        public Task<bool> AddNewCategory(CategoryRequest categoryRequest);
+        public Task<bool> UpdateCategory(CategoryRequest categoryRequest);
+        public Task<bool> DeleteCategory(CategoryRequest categoryRequest);
+        public Task<Category> GetCategoryById(int id);
+        public Task<CategoryResponse> ConvertToResponse(Category account);
     }
 }

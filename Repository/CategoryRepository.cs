@@ -26,7 +26,7 @@ namespace Repository
             _context = context;
             _productRepository = productRepository;
         }
-        public bool AddNewCategory(CategoryRequest categoryRequest)
+        public async Task<bool> AddNewCategory(CategoryRequest categoryRequest)
         {
             if (categoryRequest == null)
             {
@@ -38,12 +38,13 @@ namespace Repository
             }
             try
             {
-                _context.Categories.AddAsync(
+                await _context.Categories.AddAsync(
                     new Category
                     {
                         Name = categoryRequest.Name
                     }
                 );
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch
@@ -51,7 +52,7 @@ namespace Repository
                 return false;
             }
         }
-        public bool DeleteCategory(CategoryRequest categoryRequest)
+        public async Task<bool> DeleteCategory(CategoryRequest categoryRequest)
         {
             if (categoryRequest == null)
             {
@@ -62,24 +63,25 @@ namespace Repository
                 throw new MissingFieldException(nameof(categoryRequest.Id));
             }
             int id = categoryRequest.Id;
-            Category category = GetCategoryById(id);
+            Category category = await GetCategoryById(id);
             if (category == null)
             {
                 throw new KeyNotFoundException(nameof(id));
             }
             _context.Categories.Remove(category);
+            await _context.SaveChangesAsync();
             return true;
         }
-        public Category GetCategoryById(int id)
+        public async Task<Category> GetCategoryById(int id)
         {
             if (id == null)
             {
                 throw new MissingFieldException(nameof(id));
             }
-            Category category = _context.Categories.FirstOrDefault(x => x.Id == id);
+            Category category = await _context.Categories.FindAsync(id);
             return category;
         }
-        public bool UpdateCategory(CategoryRequest categoryRequest)
+        public async Task<bool> UpdateCategory(CategoryRequest categoryRequest)
         {
             if (categoryRequest == null)
             {
@@ -95,16 +97,17 @@ namespace Repository
             }
 
             int id = categoryRequest.Id;
-            Category category = GetCategoryById(id);
+            Category category = await GetCategoryById(id);
             if (category == null)
             {
                 throw new KeyNotFoundException(nameof(id));
             }
             category.Name = categoryRequest.Name;
             _context.Categories.Update(category);
+            await _context.SaveChangesAsync();
             return true;
         }
-        public CategoryResponse ConvertToResponse(Category category)
+        public async Task<CategoryResponse> ConvertToResponse(Category category)
         {
             if (category == null)
             {
@@ -114,7 +117,7 @@ namespace Repository
             {
                 Id = category.Id,
                 Name = category.Name,
-                ProductList = _productRepository.GetAllProductByCategoryId(category.Id);
+                ProductList = await _productRepository.GetAllProductByCategoryId(category.Id)
             };
         }
     }

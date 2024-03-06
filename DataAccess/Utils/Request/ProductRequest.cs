@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Utils.Request
 {
-    public class CategoryRequest
+    public class ProductRequest
     {
-        public int Id { get; set; }
         public string Name { get; set; }
+        public string Detail { get; set; }
+        public string Price { get; set; }
+        public string? CategoryId { get; set; }
     }
 }
