@@ -16,9 +16,9 @@ namespace Repository
         {
             _context = context;
         }
-        public Role GetRoleById(int id)
+        public async Task<Role> GetRoleById(int id)
         {
-            return _context.Roles.FirstOrDefault(x => (x.Id == id));
+            return await _context.Roles.FindAsync(id);
         }
     }
 }

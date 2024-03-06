@@ -11,12 +11,12 @@ namespace Repository.IRepo
 {
     public interface IAccountRepository
     {
-        public bool AddNewAccount(AccountRequest accountRequest);
-        public bool UpdateAccount(AccountRequest accountRequest);
-        public bool DeleteAccount(AccountRequest accountRequest);
-        public Account GetAccountById(int id);
-        public Account GetAccountByEmail(string email);
-        public Account GetAccountByEmailAndPassword(string email, string password);
-        public AccountResponse ConvertToResponse(Account account);
+        public Task<bool> AddNewAccount(AccountRequest accountRequest);
+        public Task<bool> UpdateAccount(AccountRequest accountRequest);
+        public Task<bool> DeleteAccount(AccountRequest accountRequest);
+        public Task<Account> GetAccountById(int id);
+        public Task<Account> GetAccountByEmail(string email);
+        public Task<Account> GetAccountByEmailAndPassword(string email, string password);
+        public Task<AccountResponse> ConvertToResponse(Account account);
     }
 }

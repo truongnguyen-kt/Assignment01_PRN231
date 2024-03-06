@@ -9,6 +9,6 @@ namespace Repository.IRepo
 {
     public interface IRoleRepository
     {
-        public Role GetRoleById(int id);
+        public Task<Role> GetRoleById(int id);
     }
 }

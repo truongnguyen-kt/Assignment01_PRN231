@@ -2,6 +2,7 @@
 using Assignment01.Utils.Response;
 using DataAccess.Context;
 using DataAccess.Entities;
+using Microsoft.EntityFrameworkCore;
 using Repository.IRepo;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace Assignment01.Repository
             _context = context;
             _roleRepository = roleRepository;
         }
-        public bool AddNewAccount(AccountRequest accountRequest)
+        public async Task<bool> AddNewAccount(AccountRequest accountRequest)
         {
             if (accountRequest == null)
             {
@@ -53,7 +54,7 @@ namespace Assignment01.Repository
             }
             try
             {
-                _context.Accounts.AddAsync(
+                await _context.Accounts.AddAsync(
                     new Account
                     {
                         Email = accountRequest.Email,
@@ -64,6 +65,7 @@ namespace Assignment01.Repository
                         Status = true
                     }
                 );
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch
@@ -72,7 +74,7 @@ namespace Assignment01.Repository
             }
         }
 
-        public bool UpdateAccount(AccountRequest accountRequest)
+        public async Task<bool> UpdateAccount(AccountRequest accountRequest)
         {
             if (accountRequest == null)
             {
@@ -104,7 +106,7 @@ namespace Assignment01.Repository
             }
 
             int id = accountRequest.Id;
-            Account account = GetAccountById(id);
+            Account account = await GetAccountById(id);
             if (account == null)
             {
                 throw new KeyNotFoundException(nameof(id));
@@ -114,10 +116,11 @@ namespace Assignment01.Repository
             account.FullName = accountRequest.FullName;
             account.DateOfBirth = accountRequest.DateOfBirth;
             _context.Accounts.Update(account);
+            await _context.SaveChangesAsync();
             return true;
         }
 
-        public bool DeleteAccount(AccountRequest accountRequest)
+        public async Task<bool> DeleteAccount(AccountRequest accountRequest)
         {
             if (accountRequest == null)
             {
@@ -128,7 +131,7 @@ namespace Assignment01.Repository
                 throw new MissingFieldException(nameof(accountRequest.Id));
             }
             int id = accountRequest.Id;
-            Account account = GetAccountById(id);
+            Account account = await GetAccountById(id);
             if (account == null)
             {
                 throw new KeyNotFoundException(nameof(id));
@@ -138,27 +141,27 @@ namespace Assignment01.Repository
             return true;
         }
 
-        public Account GetAccountById(int id)
+        public async Task<Account> GetAccountById(int id)
         {
             if (id == null)
             {
                 throw new MissingFieldException(nameof(id));
             }
-            Account account = _context.Accounts.FirstOrDefault(x => x.Id == id);
+            Account account = await _context.Accounts.FindAsync(id);
             return account;
         }
 
-        public Account GetAccountByEmail(string email)
+        public async Task<Account> GetAccountByEmail(string email)
         {
             if (email == null)
             {
                 throw new MissingFieldException(nameof(email));
             }
-            Account account = _context.Accounts.FirstOrDefault(x => x.Email == email);
+            Account account = await _context.Accounts.FirstOrDefaultAsync(x => x.Email == email);
             return account;
         }
 
-        public Account GetAccountByEmailAndPassword(string email, string password)
+        public async Task<Account> GetAccountByEmailAndPassword(string email, string password)
         {
             if (email == null)
             {
@@ -168,13 +171,13 @@ namespace Assignment01.Repository
             {
                 throw new MissingFieldException(nameof(password));
             }
-            Account account = _context.Accounts.FirstOrDefault(
+            Account account = await _context.Accounts.FirstOrDefaultAsync(
                 x => (x.Email == email && x.Password == password && x.Status == true)
             );
             return account;
         }
 
-        public AccountResponse ConvertToResponse(Account account)
+        public async Task<AccountResponse> ConvertToResponse(Account account)
         {
             if (account == null)
             {
@@ -189,7 +192,7 @@ namespace Assignment01.Repository
                 DateOfBirth = account.DateOfBirth,
                 Address = account.Address,
                 Status = account.Status,
-                Role = _roleRepository.GetRoleById((int)account.RoleId)
+                Role = await _roleRepository.GetRoleById((int)account.RoleId)
             };
         }
     }

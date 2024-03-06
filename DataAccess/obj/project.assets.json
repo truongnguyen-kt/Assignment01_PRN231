@@ -2383,23 +2383,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Blues\\.nuget\\packages\\": {},
+    "C:\\Users\\Minh Tran\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\LEARNING\\PRN231\\Assignment01\\DataAccess\\DataAccess.csproj",
+      "projectUniqueName": "D:\\Semester\\Term8\\PRN231\\Assignment01_PRN231\\DataAccess\\DataAccess.csproj",
       "projectName": "DataAccess",
-      "projectPath": "D:\\LEARNING\\PRN231\\Assignment01\\DataAccess\\DataAccess.csproj",
-      "packagesPath": "C:\\Users\\Blues\\.nuget\\packages\\",
-      "outputPath": "D:\\LEARNING\\PRN231\\Assignment01\\DataAccess\\obj\\",
+      "projectPath": "D:\\Semester\\Term8\\PRN231\\Assignment01_PRN231\\DataAccess\\DataAccess.csproj",
+      "packagesPath": "C:\\Users\\Minh Tran\\.nuget\\packages\\",
+      "outputPath": "D:\\Semester\\Term8\\PRN231\\Assignment01_PRN231\\DataAccess\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Blues\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Minh Tran\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2471,7 +2471,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }
