@@ -15,6 +15,7 @@ namespace Repository
     public class ProductRepository : IProductRepository
     {
         private readonly assignment_prn_231Context _context;
+
         private readonly ICategoryRepository _categoryRepository;
         public ProductRepository(assignment_prn_231Context context, ICategoryRepository categoryRepository)
         {
@@ -149,7 +150,7 @@ namespace Repository
             _context.Products.Update(product);
             await _context.SaveChangesAsync();
 
-            throw new NotImplementedException();
+            return true;
         }
 
         public async Task<List<ProductResponse>> GetAllProductByCategoryId(int categoryId)

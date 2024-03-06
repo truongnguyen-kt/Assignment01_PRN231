@@ -1,4 +1,5 @@
-﻿using DataAccess.Context;
+﻿using Assignment01.Utils.Request;
+using DataAccess.Context;
 using DataAccess.Entities;
 using Repository.IRepo;
 using System;
@@ -18,6 +19,10 @@ namespace Repository
         }
         public async Task<Role> GetRoleById(int id)
         {
+            if (id == null)
+            {
+                throw new MissingFieldException(nameof(id));
+            }
             return await _context.Roles.FindAsync(id);
         }
     }

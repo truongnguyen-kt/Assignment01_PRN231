@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 D:\Semester\Term8\PRN231\Assignment01_PRN231\Assignment01\bin\Debug\net6.0\appsettings.Development.json
 D:\Semester\Term8\PRN231\Assignment01_PRN231\Assignment01\bin\Debug\net6.0\Assignment01.exe
 D:\Semester\Term8\PRN231\Assignment01_PRN231\Assignment01\bin\Debug\net6.0\appsettings.json
@@ -69,3 +70,5 @@ D:\Semester\Term8\PRN231\Assignment01_PRN231\Assignment01\obj\Debug\net6.0\refin
 D:\Semester\Term8\PRN231\Assignment01_PRN231\Assignment01\obj\Debug\net6.0\Assignment01.pdb
 D:\Semester\Term8\PRN231\Assignment01_PRN231\Assignment01\obj\Debug\net6.0\Assignment01.genruntimeconfig.cache
 D:\Semester\Term8\PRN231\Assignment01_PRN231\Assignment01\obj\Debug\net6.0\ref\Assignment01.dll
+=======
+>>>>>>> b199859dfbb3c5d7f357ac034f264f048324b291

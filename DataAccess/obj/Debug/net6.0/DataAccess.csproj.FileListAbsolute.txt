@@ -12,6 +12,7 @@ D:\LEARNING\PRN231\Assignment01-TruongNHLSE160191\DataAccess\obj\Debug\net6.0\re
 D:\LEARNING\PRN231\Assignment01-TruongNHLSE160191\DataAccess\obj\Debug\net6.0\DataAccess.pdb
 D:\LEARNING\PRN231\Assignment01-TruongNHLSE160191\DataAccess\obj\Debug\net6.0\DataAccess.genruntimeconfig.cache
 D:\LEARNING\PRN231\Assignment01-TruongNHLSE160191\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
+<<<<<<< HEAD
 D:\Semester\Term8\PRN231\Assignment01_PRN231\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
 D:\Semester\Term8\PRN231\Assignment01_PRN231\DataAccess\bin\Debug\net6.0\DataAccess.runtimeconfig.json
 D:\Semester\Term8\PRN231\Assignment01_PRN231\DataAccess\bin\Debug\net6.0\DataAccess.dll
@@ -27,3 +28,5 @@ D:\Semester\Term8\PRN231\Assignment01_PRN231\DataAccess\obj\Debug\net6.0\refint\
 D:\Semester\Term8\PRN231\Assignment01_PRN231\DataAccess\obj\Debug\net6.0\DataAccess.pdb
 D:\Semester\Term8\PRN231\Assignment01_PRN231\DataAccess\obj\Debug\net6.0\DataAccess.genruntimeconfig.cache
 D:\Semester\Term8\PRN231\Assignment01_PRN231\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
+=======
+>>>>>>> b199859dfbb3c5d7f357ac034f264f048324b291
