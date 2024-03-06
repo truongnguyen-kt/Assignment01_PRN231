@@ -2,6 +2,7 @@
 using Assignment01.Utils.Response;
 using DataAccess.Context;
 using DataAccess.Entities;
+using Repository.IRepo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +12,18 @@ using System.Threading.Tasks;
 
 namespace Assignment01.Repository
 {
-    public class AccountRepository
+    public class AccountRepository : IAccountRepository
     {
         private readonly assignment_prn_231Context _context;
+        private readonly IRoleRepository _roleRepository;
         public AccountRepository(assignment_prn_231Context context)
         {
             _context = context;
+        }
+        public AccountRepository(assignment_prn_231Context context, IRoleRepository roleRepository)
+        {
+            _context = context;
+            _roleRepository = roleRepository;
         }
         public bool AddNewAccount(AccountRequest accountRequest)
         {
@@ -54,6 +61,7 @@ namespace Assignment01.Repository
                         FullName = accountRequest.FullName,
                         Address = accountRequest.Address,
                         DateOfBirth = accountRequest.DateOfBirth,
+                        Status = true
                     }
                 );
                 return true;
@@ -101,6 +109,10 @@ namespace Assignment01.Repository
             {
                 throw new KeyNotFoundException(nameof(id));
             }
+            account.Address = accountRequest.Address;
+            account.Password = accountRequest.Password;
+            account.FullName = accountRequest.FullName;
+            account.DateOfBirth = accountRequest.DateOfBirth;
             _context.Accounts.Update(account);
             return true;
         }
@@ -121,7 +133,8 @@ namespace Assignment01.Repository
             {
                 throw new KeyNotFoundException(nameof(id));
             }
-            _context.Accounts.Remove(account);
+            account.Status = false;
+            _context.Accounts.Update(account);
             return true;
         }
 
@@ -156,7 +169,7 @@ namespace Assignment01.Repository
                 throw new MissingFieldException(nameof(password));
             }
             Account account = _context.Accounts.FirstOrDefault(
-                x => (x.Email == email && x.Password == password)
+                x => (x.Email == email && x.Password == password && x.Status == true)
             );
             return account;
         }
@@ -174,7 +187,9 @@ namespace Assignment01.Repository
                 Password = account.Password,
                 FullName = account.FullName,
                 DateOfBirth = account.DateOfBirth,
-                Address = account.Address
+                Address = account.Address,
+                Status = account.Status,
+                Role = _roleRepository.GetRoleById((int)account.RoleId)
             };
         }
     }
