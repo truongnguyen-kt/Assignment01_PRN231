@@ -12,6 +12,8 @@ namespace Repository.IRepo
     public interface IAccountRepository
     {
         public Task<bool> AddNewAccount(AccountRequest accountRequest);
+        public Task<bool> AddNewStaffAccount(AccountRequest accountRequest);
+        public Task<bool> AddNewAdminAccount(AccountRequest accountRequest);
         public Task<bool> UpdateAccount(AccountRequest accountRequest);
         public Task<bool> DeleteAccount(AccountRequest accountRequest);
         public Task<Account> GetAccountById(int id);

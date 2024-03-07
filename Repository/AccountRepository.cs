@@ -54,6 +54,12 @@ namespace Assignment01.Repository
             }
             try
             {
+                var account = await GetAccountByEmail(accountRequest.Email);
+                if (account != null)
+                {
+                    throw new Exception("Email already exist!");
+                }
+                var role = await _roleRepository.GetRoleByName("User");
                 await _context.Accounts.AddAsync(
                     new Account
                     {
@@ -62,9 +68,120 @@ namespace Assignment01.Repository
                         FullName = accountRequest.FullName,
                         Address = accountRequest.Address,
                         DateOfBirth = accountRequest.DateOfBirth,
-                        Status = true
+                        Status = true,
+                        RoleId = role.Id
                     }
-                );
+                ); ;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> AddNewStaffAccount(AccountRequest accountRequest)
+        {
+            if (accountRequest == null)
+            {
+                throw new ArgumentNullException("Account Request is Null!");
+            }
+            if (accountRequest.Email == null || accountRequest.Email.Trim().Length < 1)
+            {
+                throw new MissingFieldException(nameof(accountRequest.Email));
+            }
+            if (accountRequest.Password == null || accountRequest.Password.Trim().Length < 1)
+            {
+                throw new MissingFieldException(nameof(accountRequest.Password));
+            }
+            if (accountRequest.FullName == null || accountRequest.FullName.Trim().Length < 1)
+            {
+                throw new MissingFieldException(nameof(accountRequest.FullName));
+            }
+            if (accountRequest.DateOfBirth == null)
+            {
+                throw new MissingFieldException(nameof(accountRequest.DateOfBirth));
+            }
+            if (accountRequest.Address == null || accountRequest.Address.Trim().Length < 1)
+            {
+                throw new MissingFieldException(nameof(accountRequest.Address));
+            }
+            try
+            {
+                var account = await GetAccountByEmail(accountRequest.Email);
+                if (account != null)
+                {
+                    throw new Exception("Email already exist!");
+                }
+                var role = await _roleRepository.GetRoleByName("Staff");
+                await _context.Accounts.AddAsync(
+                    new Account
+                    {
+                        Email = accountRequest.Email,
+                        Password = accountRequest.Password,
+                        FullName = accountRequest.FullName,
+                        Address = accountRequest.Address,
+                        DateOfBirth = accountRequest.DateOfBirth,
+                        Status = true,
+                        RoleId = role.Id
+                    }
+                ); ;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> AddNewAdminAccount(AccountRequest accountRequest)
+        {
+            if (accountRequest == null)
+            {
+                throw new ArgumentNullException("Account Request is Null!");
+            }
+            if (accountRequest.Email == null || accountRequest.Email.Trim().Length < 1)
+            {
+                throw new MissingFieldException(nameof(accountRequest.Email));
+            }
+            if (accountRequest.Password == null || accountRequest.Password.Trim().Length < 1)
+            {
+                throw new MissingFieldException(nameof(accountRequest.Password));
+            }
+            if (accountRequest.FullName == null || accountRequest.FullName.Trim().Length < 1)
+            {
+                throw new MissingFieldException(nameof(accountRequest.FullName));
+            }
+            if (accountRequest.DateOfBirth == null)
+            {
+                throw new MissingFieldException(nameof(accountRequest.DateOfBirth));
+            }
+            if (accountRequest.Address == null || accountRequest.Address.Trim().Length < 1)
+            {
+                throw new MissingFieldException(nameof(accountRequest.Address));
+            }
+            try
+            {
+                var account = await GetAccountByEmail(accountRequest.Email);
+                if (account != null)
+                {
+                    throw new Exception("Email already exist!");
+                }
+                var role = await _roleRepository.GetRoleByName("Admin");
+                await _context.Accounts.AddAsync(
+                    new Account
+                    {
+                        Email = accountRequest.Email,
+                        Password = accountRequest.Password,
+                        FullName = accountRequest.FullName,
+                        Address = accountRequest.Address,
+                        DateOfBirth = accountRequest.DateOfBirth,
+                        Status = true,
+                        RoleId = role.Id
+                    }
+                ); ;
                 await _context.SaveChangesAsync();
                 return true;
             }

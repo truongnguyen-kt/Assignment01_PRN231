@@ -10,5 +10,7 @@ namespace Repository.IRepo
     public interface IRoleRepository
     {
         public Task<Role> GetRoleById(int id);
+        public Task AddRole(Role role);
+        public Task<Role> GetRoleByName(string name);
     }
 }

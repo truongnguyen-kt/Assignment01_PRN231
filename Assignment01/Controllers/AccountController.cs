@@ -77,6 +77,48 @@ namespace Assignment01.Controllers
                 return StatusCode(statusCode, errorMessage);
             }
         }
+        [HttpPost("create-admin")]
+        public async Task<IActionResult> AddNewAdminAccount(AccountRequest accountRequest)
+        {
+            try
+            {
+                var account = await _accountRepository.AddNewAccount(accountRequest);
+                if (account != null)
+                {
+                    return StatusCode(200, "Create Account Successfully");
+                }
+                else return StatusCode(200, "Create Account Fail");
+            }
+            catch (Exception ex)
+            {
+                int statusCode;
+                string errorMessage;
+                statusCode = 500;
+                errorMessage = "Server error";
+                return StatusCode(statusCode, errorMessage);
+            }
+        }
+        [HttpPost("create-staff")]
+        public async Task<IActionResult> AddNewStaffAccount(AccountRequest accountRequest)
+        {
+            try
+            {
+                var account = await _accountRepository.AddNewAccount(accountRequest);
+                if (account != null)
+                {
+                    return StatusCode(200, "Create Account Successfully");
+                }
+                else return StatusCode(200, "Create Account Fail");
+            }
+            catch (Exception ex)
+            {
+                int statusCode;
+                string errorMessage;
+                statusCode = 500;
+                errorMessage = "Server error";
+                return StatusCode(statusCode, errorMessage);
+            }
+        }
         [HttpPost("get-account-by-email-and-password")]
         public async Task<IActionResult> GetAccountByEmailAndPassword(AccountRequest accountRequest)
         {

@@ -1,6 +1,7 @@
 ﻿using Assignment01.Utils.Request;
 using DataAccess.Context;
 using DataAccess.Entities;
+using Microsoft.EntityFrameworkCore;
 using Repository.IRepo;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,25 @@ namespace Repository
                 throw new MissingFieldException(nameof(id));
             }
             return await _context.Roles.FindAsync(id);
+        }
+        public async Task AddRole(Role role)
+        {
+            if (role == null)
+            {
+                throw new MissingFieldException($"{nameof(role)} is null");
+            }
+            await _context.Roles.AddAsync(role);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Role> GetRoleByName(string name)
+        {
+            name = name.Trim().ToUpper();
+            if (name == null || name.Length == 0)
+            {
+                throw new MissingFieldException($"{nameof(name)}");
+            }
+            return await _context.Roles.FirstOrDefaultAsync(x => x.RoleName.Trim().ToUpper().Equals(name));
         }
     }
 }
