@@ -1,4 +1,6 @@
 using Assignment01.Repository;
+using DataAccess.Context;
+using Microsoft.EntityFrameworkCore;
 using Repository;
 using Repository.IRepo;
 
@@ -9,7 +11,8 @@ namespace Assignment01
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Services.AddDbContext<assignment_prn_231Context>(options =>
+                         options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnectionString")));
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -34,10 +37,14 @@ namespace Assignment01
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Assignment_PRN"));
 
             app.MapControllers();
+
 
             app.Run();
         }

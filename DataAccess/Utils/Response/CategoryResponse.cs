@@ -11,6 +11,5 @@ namespace DataAccess.Utils.Response
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
-        public List<ProductResponse> ProductList { get; set; } 
     }
 }

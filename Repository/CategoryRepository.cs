@@ -17,16 +17,11 @@ namespace Repository
     public class CategoryRepository : ICategoryRepository
     {
         private readonly assignment_prn_231Context _context;
-        private readonly IProductRepository _productRepository;
         public CategoryRepository(assignment_prn_231Context context)
         {
             _context = context;
         }
-        public CategoryRepository(assignment_prn_231Context context, IProductRepository productRepository)
-        {
-            _context = context;
-            _productRepository = productRepository;
-        }
+       
         public async Task<bool> AddNewCategory(CategoryRequest categoryRequest)
         {
             if (categoryRequest == null)
@@ -75,9 +70,11 @@ namespace Repository
         }
 
 
-        public async Task<List<Category>> GetAllCategories()
+        public async Task<List<CategoryResponse>> GetAllCategories()
         {
-            return await _context.Categories.ToListAsync();
+            var list = await _context.Categories.ToListAsync();
+            var listResponse = list.Select(cate => ConvertToResponse(cate));
+            return (await Task.WhenAll(listResponse)).ToList();
         }
 
         public async Task<Category> GetCategoryById(int id)
@@ -88,6 +85,15 @@ namespace Repository
             }
             Category category = await _context.Categories.FindAsync(id);
             return category;
+        }
+        public async Task<CategoryResponse> GetCategoryResponseById(int id)
+        {
+            if (id == null)
+            {
+                throw new MissingFieldException(nameof(id));
+            }
+            Category category = await _context.Categories.FindAsync(id);
+            return await ConvertToResponse(category);
         }
         public async Task<bool> UpdateCategory(CategoryRequest categoryRequest)
         {
@@ -125,7 +131,6 @@ namespace Repository
             {
                 Id = category.Id,
                 Name = category.Name,
-                ProductList = await _productRepository.GetAllProductByCategoryId(category.Id)
             };
         }
     }

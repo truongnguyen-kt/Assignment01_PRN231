@@ -17,7 +17,8 @@ namespace Repository.IRepo
         public Task<bool> UpdateCategory(CategoryRequest categoryRequest);
         public Task<bool> DeleteCategory(CategoryRequest categoryRequest);
         public Task<Category> GetCategoryById(int id);
-        Task<List<Category>> GetAllCategories();
+        public Task<CategoryResponse> GetCategoryResponseById(int id);
+        Task<List<CategoryResponse>> GetAllCategories();
         public Task<CategoryResponse> ConvertToResponse(Category account);
     }
 }

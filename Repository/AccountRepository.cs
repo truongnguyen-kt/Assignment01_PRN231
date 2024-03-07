@@ -151,6 +151,10 @@ namespace Assignment01.Repository
             return account;
         }
 
+        public async Task<List<Account>> GetAllAccount()
+        {
+            return await _context.Accounts.ToListAsync();
+        }
         public async Task<Account> GetAccountByEmail(string email)
         {
             if (email == null)

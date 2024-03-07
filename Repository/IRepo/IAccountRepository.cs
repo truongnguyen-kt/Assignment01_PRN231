@@ -15,6 +15,7 @@ namespace Repository.IRepo
         public Task<bool> UpdateAccount(AccountRequest accountRequest);
         public Task<bool> DeleteAccount(AccountRequest accountRequest);
         public Task<Account> GetAccountById(int id);
+        public Task<List<Account>> GetAllAccount();
         public Task<Account> GetAccountByEmail(string email);
         public Task<Account> GetAccountByEmailAndPassword(string email, string password);
         public Task<AccountResponse> ConvertToResponse(Account account);
