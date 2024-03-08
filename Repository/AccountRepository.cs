@@ -59,7 +59,7 @@ namespace Assignment01.Repository
                 {
                     throw new Exception("Email already exist!");
                 }
-                var role = await _roleRepository.GetRoleByName("User");
+                var role = await _roleRepository.GetRoleByName("USER");
                 await _context.Accounts.AddAsync(
                     new Account
                     {
@@ -114,7 +114,7 @@ namespace Assignment01.Repository
                 {
                     throw new Exception("Email already exist!");
                 }
-                var role = await _roleRepository.GetRoleByName("Staff");
+                var role = await _roleRepository.GetRoleByName("STAFF");
                 await _context.Accounts.AddAsync(
                     new Account
                     {
@@ -169,7 +169,7 @@ namespace Assignment01.Repository
                 {
                     throw new Exception("Email already exist!");
                 }
-                var role = await _roleRepository.GetRoleByName("Admin");
+                var role = await _roleRepository.GetRoleByName("ADMIN");
                 await _context.Accounts.AddAsync(
                     new Account
                     {
@@ -279,6 +279,7 @@ namespace Assignment01.Repository
                 throw new MissingFieldException(nameof(email));
             }
             Account account = await _context.Accounts.FirstOrDefaultAsync(x => x.Email == email);
+            if (account == null) return null;
             return account;
         }
 
@@ -292,6 +293,7 @@ namespace Assignment01.Repository
             {
                 throw new MissingFieldException(nameof(password));
             }
+
             Account account = await _context.Accounts.FirstOrDefaultAsync(
                 x => (x.Email == email && x.Password == password && x.Status == true)
             );

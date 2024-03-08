@@ -1,6 +1,7 @@
 ﻿using Assignment01.Utils.Request;
 using Microsoft.AspNetCore.Mvc;
 using Repository.IRepo;
+using Repository.Token;
 
 namespace Assignment01.Controllers
 {
@@ -9,9 +10,12 @@ namespace Assignment01.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountRepository _accountRepository;
-        public AccountController(IAccountRepository accountRepository)
+        private readonly IConfiguration _config;
+        public AccountController(IAccountRepository accountRepository, IConfiguration config)
         {
             _accountRepository = accountRepository;
+            _config = config;
+            ProvideToken.Initialize(config);
         }
 
         [HttpGet("get-account-by-id/{id}")]
@@ -119,15 +123,16 @@ namespace Assignment01.Controllers
                 return StatusCode(statusCode, errorMessage);
             }
         }
-        [HttpPost("get-account-by-email-and-password")]
-        public async Task<IActionResult> GetAccountByEmailAndPassword(AccountRequest accountRequest)
+        [HttpPost("login-account")]
+        public async Task<IActionResult> loginAccount(string email, string password)
         {
             try
             {
-                var account = await _accountRepository.GetAccountByEmailAndPassword(accountRequest.Email, accountRequest.Password);
+                var account = await _accountRepository.GetAccountByEmailAndPassword(email, password);
                 if (account != null)
                 {
-                    return StatusCode(200, "Get Account By Email and Password Successfully");
+                    var token = ProvideToken.Instance.GenerateToken(account);
+                    return Ok(token);
                 }
                 else return StatusCode(200, "Account is Empty");
             }

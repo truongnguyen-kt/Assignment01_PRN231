@@ -2,7 +2,9 @@
 using Assignment01.Utils.Request;
 using DataAccess.Utils.Request;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Repository.IRepo;
+using DataAccess.EnumClass;
 
 namespace Assignment01.Controllers
 {
@@ -16,6 +18,7 @@ namespace Assignment01.Controllers
             _categoryRepository = categoryRepository;
         }
 
+        [Authorize(Roles = RolesNames.ADMIN)]
         [HttpGet("get-category-by-id/{id}")]
         public async Task<IActionResult> GetCategoryById(int id)
         {
