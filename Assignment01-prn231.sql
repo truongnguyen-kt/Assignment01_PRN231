@@ -17,12 +17,13 @@ create table [Account](
 	[FullName] nvarchar(MAX) not null,
 	[DateOfBirth] date not null,
 	[Address] nvarchar(MAX) not null,
+	[Status] bit not null,
 	[RoleId] int foreign key references [Role](Id)
 );
 go
-insert into [Account]([Email],[Password],[FullName],[DateOfBirth],[Address],[RoleId])
+insert into [Account]([Email],[Password],[FullName],[DateOfBirth],[Address],[Status],[RoleId])
 Values
-('admin@gmail.com', 'Aa@123456', 'I am Admin', '2002-01-01', 'FPT UNIVERSITY', 1)
+('admin@gmail.com', 'Aa@123456', 'I am Admin', '2002-01-01', 'FPT UNIVERSITY', 1, 1)
 go
 create table [Category](
 	[Id] int Identity(1,1) primary key,

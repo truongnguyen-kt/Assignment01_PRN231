@@ -1,15 +1,12 @@
 using Assignment01.Repository;
 using DataAccess.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OData.Edm;
-using Microsoft.OData.ModelBuilder;
 using Microsoft.OpenApi.Models;
 using Repository;
 using Repository.IRepo;
-using Swashbuckle.AspNetCore.Filters;
 using System.ComponentModel.Design;
 using System.Text;
 
@@ -20,16 +17,6 @@ namespace Assignment01
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            // Odata
-            builder.Services.AddControllers().AddOData(options =>
-            options.AddRouteComponents(routePrefix: "odata", model: GetEdmModel())
-            .Select()
-            .Expand()
-            .OrderBy()
-            .SetMaxTop(100)
-            .Count()
-            .Filter());
 
             // JWT Set Up
             builder.Services.AddEndpointsApiExplorer();
@@ -92,9 +79,7 @@ namespace Assignment01
             builder.Services.AddScoped<IRoleRepository, RoleRepository>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
-            builder.Services.AddDbContext<assignment_prn_231Context>(options =>
-                      options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnectionString")));
-
+            builder.Services.AddDbContext<assignment_prn_231Context>();
             builder.Services.AddHttpContextAccessor();
 
             // Add services to the container.
@@ -113,9 +98,6 @@ namespace Assignment01
                 app.UseSwaggerUI();
             }
 
-            // Odata
-            app.UseODataBatching();
-
             app.UseHttpsRedirection();
 
             // Authentication
@@ -131,13 +113,5 @@ namespace Assignment01
             app.Run();
         }
 
-        static IEdmModel GetEdmModel()
-        {
-            ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-            //builder.EntitySet<Artworks>("Artworks");
-            //builder.EntitySet<Users>("Users");
-            //builder.EntitySet<Museums>("Museums");
-            return builder.GetEdmModel();
-        }
     }
 }
