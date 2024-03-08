@@ -7,6 +7,9 @@ create table [Role](
 	[RoleName] nvarchar(MAX) NOT NULL CHECK ([RoleName] IN ('Admin', 'User', 'Staff')),
 );
 go
+insert into [Role](RoleName) Values
+('Admin'),('Staff'),('User')
+go
 create table [Account](
 	[Id] int Identity(1,1) primary key,
 	[Email] nvarchar(MAX) not null,
@@ -16,6 +19,10 @@ create table [Account](
 	[Address] nvarchar(MAX) not null,
 	[RoleId] int foreign key references [Role](Id)
 );
+go
+insert into [Account]([Email],[Password],[FullName],[DateOfBirth],[Address],[RoleId])
+Values
+('admin@gmail.com', 'Aa@123456', 'I am Admin', '2002-01-01', 'FPT UNIVERSITY', 1)
 go
 create table [Category](
 	[Id] int Identity(1,1) primary key,
