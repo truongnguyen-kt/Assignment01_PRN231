@@ -19,39 +19,46 @@ namespace Assignment01
 
             // JWT Set Up
             builder.Services.AddEndpointsApiExplorer();
-            //builder.Services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Assignment_PRN", Version = "v1" });
-            //    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-            //    {
-            //        Description = "Please Enter The Token To Authenticate The Role",
-            //        Name = "Authorization",
-            //        In = ParameterLocation.Header,
-            //        Type = SecuritySchemeType.Http,
-            //        Scheme = "Bearer"
-            //    });
-            //    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            //    {
-            //        {
-            //            new OpenApiSecurityScheme
-            //            {
-            //                Reference = new OpenApiReference
-            //                {
-            //                    Type = ReferenceType.SecurityScheme,
-            //                    Id = "Bearer"
-            //                }
-            //            },
-            //            new string[] { }
-            //        }
-            //    });
-            //});
-            
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Assignment_PRN", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "Please Enter The Token To Authenticate The Role",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
+            });
+
 
             // JWT Token
-            builder.Services.AddCors(options => options.AddDefaultPolicy(
-                        policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()
-              ));
-            
+            //builder.Services.AddCors(options => options.AddDefaultPolicy(
+            //            policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()
+            //  ));
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder => builder
+                        .WithOrigins("http://127.0.0.1:5500") // Replace with your frontend origin
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+            });
             builder.Services
                 .AddAuthentication(options =>
                 {
@@ -94,19 +101,20 @@ namespace Assignment01
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                //app.UseSwagger();
-                //app.UseSwaggerUI();
+                app.UseSwagger();
+                app.UseSwaggerUI();
                 app.UseStaticFiles();
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowSpecificOrigin");
 
             // Authentication
             app.UseAuthentication();
 
             app.UseAuthorization();
 
-           // app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Assignment_PRN"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Assignment_PRN"));
 
             app.MapControllers();
 

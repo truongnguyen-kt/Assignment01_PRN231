@@ -26,34 +26,34 @@
             width: 350px;
         }
 
-            .login-container h2 {
-                text-align: center;
-                margin-bottom: 20px;
-                color: #007bff;
-            }
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
 
         .form-group {
             margin-bottom: 20px;
         }
 
-            .form-group label {
-                display: block;
-                margin-bottom: 5px;
-                color: #333;
-            }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
 
-            .form-group input {
-                width: calc(100% - 30px);
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                transition: border-color 0.3s;
-            }
+        .form-group input {
+            width: calc(100% - 30px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
 
-                .form-group input:focus {
-                    outline: none;
-                    border-color: #007bff;
-                }
+        .form-group input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
 
         .btn {
             width: 100%;
@@ -66,9 +66,9 @@
             transition: background-color 0.3s;
         }
 
-            .btn:hover {
-                background-color: #0056b3;
-            }
+        .btn:hover {
+            background-color: #0056b3;
+        }
 
         .error-message {
             color: #dc3545;
@@ -175,6 +175,9 @@
                 url: 'https://localhost:7061/api/account/login-account?email=' + email + '&password=' + password,
                 type: 'POST',
                 contentType: 'application/json',
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
                 success: function (response) {
                     console.log(response);
                     if (response && response != "Account is Empty") {

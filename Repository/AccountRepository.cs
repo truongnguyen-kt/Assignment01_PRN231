@@ -255,6 +255,7 @@ namespace Assignment01.Repository
             }
             account.Status = false;
             _context.Accounts.Update(account);
+            await _context.SaveChangesAsync();
             return true;
         }
 
