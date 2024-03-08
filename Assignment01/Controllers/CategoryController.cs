@@ -18,7 +18,6 @@ namespace Assignment01.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        [Authorize(Roles = RolesNames.ADMIN)]
         [HttpGet("get-category-by-id/{id}")]
         public async Task<IActionResult> GetCategoryById(int id)
         {
@@ -40,6 +39,7 @@ namespace Assignment01.Controllers
                 return StatusCode(statusCode, errorMessage);
             }
         }
+
         [HttpGet("get-all-category")]
         public async Task<IActionResult> GetAllCategories()
         {
@@ -62,6 +62,7 @@ namespace Assignment01.Controllers
             }
         }
         [HttpPost("create-category")]
+        [Authorize(Roles = RolesNames.ADMIN + "," + RolesNames.STAFF)]
         public async Task<IActionResult> AddNewCategory(CategoryRequest categoryRequest)
         {
             try
@@ -83,6 +84,7 @@ namespace Assignment01.Controllers
             }
         }
         [HttpPut("update-category")]
+        [Authorize(Roles = RolesNames.ADMIN + "," + RolesNames.STAFF)]
         public async Task<IActionResult> UpdateCategory(CategoryRequest categoryRequest)
         {
             try
@@ -104,6 +106,7 @@ namespace Assignment01.Controllers
             }
         }
         [HttpDelete("delete-category")]
+        [Authorize(Roles = RolesNames.ADMIN + "," + RolesNames.STAFF)]
         public async Task<IActionResult> DeleteCategory(CategoryRequest categoryRequest)
         {
             try

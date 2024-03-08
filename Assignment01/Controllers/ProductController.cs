@@ -2,7 +2,9 @@
 using Assignment01.Utils.Request;
 using DataAccess.Utils.Request;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Repository.IRepo;
+using DataAccess.EnumClass;
 
 namespace Assignment01.Controllers
 {
@@ -79,6 +81,7 @@ namespace Assignment01.Controllers
                 return StatusCode(statusCode, errorMessage);
             }
         }
+        [Authorize(Roles = RolesNames.ADMIN + "," + RolesNames.STAFF)]
         [HttpPost("create-product")]
         public async Task<IActionResult> AddNewProduct(ProductRequest productRequest)
         {
@@ -100,6 +103,7 @@ namespace Assignment01.Controllers
                 return StatusCode(statusCode, errorMessage);
             }
         }
+        [Authorize(Roles = RolesNames.ADMIN + "," + RolesNames.STAFF)]
         [HttpPut("update-product")]
         public async Task<IActionResult> UpdateProduct(ProductRequest productRequest)
         {
@@ -121,6 +125,7 @@ namespace Assignment01.Controllers
                 return StatusCode(statusCode, errorMessage);
             }
         }
+        [Authorize(Roles = RolesNames.ADMIN + "," + RolesNames.STAFF)]
         [HttpDelete("delete-product")]
         public async Task<IActionResult> DeleteProduct(ProductRequest productRequest)
         {

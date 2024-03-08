@@ -1,7 +1,10 @@
 ﻿using Assignment01.Utils.Request;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Repository.IRepo;
 using Repository.Token;
+using DataAccess.EnumClass;
+using DataAccess.Dto;
 
 namespace Assignment01.Controllers
 {
@@ -17,7 +20,7 @@ namespace Assignment01.Controllers
             _config = config;
             ProvideToken.Initialize(config);
         }
-
+        [Authorize(Roles = RolesNames.ADMIN)]
         [HttpGet("get-account-by-id/{id}")]
         public async Task<IActionResult> GetAccoutById(int id)
         {
@@ -39,6 +42,7 @@ namespace Assignment01.Controllers
                 return StatusCode(statusCode, errorMessage);
             }
         }
+        [Authorize(Roles = RolesNames.ADMIN)]
         [HttpGet("get-all-account")]
         public async Task<IActionResult> GetAllAccount(int id)
         {
@@ -81,12 +85,13 @@ namespace Assignment01.Controllers
                 return StatusCode(statusCode, errorMessage);
             }
         }
+        [Authorize(Roles = RolesNames.ADMIN)]
         [HttpPost("create-admin")]
         public async Task<IActionResult> AddNewAdminAccount(AccountRequest accountRequest)
         {
             try
             {
-                var account = await _accountRepository.AddNewAccount(accountRequest);
+                var account = await _accountRepository.AddNewAdminAccount(accountRequest);
                 if (account != null)
                 {
                     return StatusCode(200, "Create Account Successfully");
@@ -102,12 +107,13 @@ namespace Assignment01.Controllers
                 return StatusCode(statusCode, errorMessage);
             }
         }
+        [Authorize(Roles = RolesNames.ADMIN + "," + RolesNames.STAFF)]
         [HttpPost("create-staff")]
         public async Task<IActionResult> AddNewStaffAccount(AccountRequest accountRequest)
         {
             try
             {
-                var account = await _accountRepository.AddNewAccount(accountRequest);
+                var account = await _accountRepository.AddNewStaffAccount(accountRequest);
                 if (account != null)
                 {
                     return StatusCode(200, "Create Account Successfully");
@@ -132,7 +138,12 @@ namespace Assignment01.Controllers
                 if (account != null)
                 {
                     var token = ProvideToken.Instance.GenerateToken(account);
-                    return Ok(token);
+                    var response = new LoginResponseDto
+                    {
+                        Token = token,
+                        Account = account
+                    };
+                    return Ok(response);
                 }
                 else return StatusCode(200, "Account is Empty");
             }
@@ -145,6 +156,7 @@ namespace Assignment01.Controllers
                 return StatusCode(statusCode, errorMessage);
             }
         }
+        [Authorize(Roles = RolesNames.ADMIN + "," + RolesNames.USER + "," + RolesNames.STAFF)]
         [HttpPut("update-account")]
         public async Task<IActionResult> UpdateAccount(AccountRequest accountRequest)
         {
@@ -166,6 +178,7 @@ namespace Assignment01.Controllers
                 return StatusCode(statusCode, errorMessage);
             }
         }
+        [Authorize(Roles = RolesNames.ADMIN)]
         [HttpDelete("delete-account")]
         public async Task<IActionResult> DeleteAccount(AccountRequest accountRequest)
         {

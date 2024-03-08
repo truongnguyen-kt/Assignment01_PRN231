@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Manage Profile</h2>
+        <div id="profileInfo"></div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Get user ID from local storage
+            var user = localStorage.getItem("user");
+
+            // Fetch user data using AJAX
+            $.ajax({
+                url: "https://your-api-endpoint.com/users/" + user.userId,
+                type: "GET",
+                success: function (response) {
+                    var profileInfo = `
+                        <div class="card">
+                            <div class="card-header">
+                                Profile Information
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="name">Name:</label>
+                                    <input type="text" class="form-control" id="name" value="${response.name}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input type="email" class="form-control" id="email" value="${response.email}">
+                                </div>
+                                <button class="btn btn-primary" id="updateProfile">Update Profile</button>
+                            </div>
+                        </div>
+                    `;
+                    $("#profileInfo").html(profileInfo);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                    alert("Failed to fetch user data. Please try again.");
+                }
+            });
+
+            // Handle profile update
+            $(document).on("click", "#updateProfile", function () {
+                var newName = $("#name").val();
+                var newEmail = $("#email").val();
+
+                // Send updated profile data to the API
+                $.ajax({
+                    url: "https://your-api-endpoint.com/users/" + userId,
+                    type: "PUT",
+                    data: {
+                        name: newName,
+                        email: newEmail
+                    },
+                    success: function (response) {
+                        alert("Profile updated successfully!");
+                        // Optionally, update the displayed profile information
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                        alert("Failed to update profile. Please try again.");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
